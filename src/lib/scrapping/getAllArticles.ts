@@ -10,7 +10,7 @@ const mainUrl = process.env.POSTS_URL! + "/tags/dota-2";
 export const getAllArticles = async () => {
   try {
     const articleUrls = await getArticleLinks(mainUrl);
-
+    console.log('urls: ', articleUrls)
     if (!articleUrls) return [];
     const dbArticles = await getArticles();
     let switcher: boolean = false;
@@ -37,6 +37,7 @@ export const getAllArticles = async () => {
         })
     );
     const values = await Promise.all(promises);
+    console.log(values)
     const filtered = values.filter(
       //@ts-ignore
       (elem) => elem != null && elem?.content && elem.title && elem.url
