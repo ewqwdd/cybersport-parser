@@ -13,8 +13,7 @@ export const getAllArticles = async () => {
     console.log('urls: ', articleUrls)
     if (!articleUrls) return [];
     const dbArticles = await getArticles();
-    let switcher: boolean = false;
-    const promises = articleUrls.slice(0, 5).map(
+    const promises = articleUrls.map(
       (elem) =>
         new Promise(async (resolve, reject) => {
           setTimeout(() => {
@@ -24,9 +23,8 @@ export const getAllArticles = async () => {
             (dbElem) => dbElem.url === elem.url
           );
           if (found !== -1) {
-            switcher = true;
+            resolve(null)
           }
-          if (switcher) resolve(null);
           const article = await getArticleData({
             url: elem.url,
             mainPicture: elem.mainPicture,
